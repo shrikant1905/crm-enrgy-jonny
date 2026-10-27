@@ -241,11 +241,7 @@ export const WebsiteNavbar = ({
             <span style={{ letterSpacing: '0.02em', fontWeight: 900, fontSize: '11px', flexShrink: 0, marginLeft: '2px' }}>&gt;&gt;</span>
           </button>
 
-<<<<<<< HEAD
-          {/* 6. SALES - chat zBox */}
-=======
           {/* 6. SALES */}
->>>>>>> 5810dccb5c980b40a058186b21a8e0776ce0fc2b
           <button
             type="button"
             className="website-nav-btn website-btn-sales"
@@ -544,11 +540,7 @@ export const WebsiteNavbar = ({
                 }}
               >
                 <MessageSquare size={16} />
-<<<<<<< HEAD
-                <span>{t('SALES — chat zBox')}</span>
-=======
                 <span>{isEs ? 'VENTAS' : 'SALES'}</span>
->>>>>>> 5810dccb5c980b40a058186b21a8e0776ce0fc2b
               </button>
 
               <div style={{ height: '1px', background: 'var(--web-border)', margin: '8px 0' }} />

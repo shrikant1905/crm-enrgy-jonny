@@ -314,9 +314,6 @@ export const WebsiteHome = () => {
               <ArrowRight size={16} className="btn-arrow-icon" style={{ flexShrink: 0 }} />
             </button>
 
-<<<<<<< HEAD
-            {/* SALES chat zBox Button */}
-=======
             {/* Secondary Button */}
             <button
               type="button"
@@ -331,7 +328,6 @@ export const WebsiteHome = () => {
             </button>
 
             {/* Sales Button */}
->>>>>>> 5810dccb5c980b40a058186b21a8e0776ce0fc2b
             <button
               type="button"
               onClick={onOpenSales}
@@ -348,13 +344,8 @@ export const WebsiteHome = () => {
               }}
               title="Open Sales Consultation chat eBox"
             >
-<<<<<<< HEAD
-              <MessageSquare size={17} style={{ flexShrink: 0 }} />
-              <span>{isEs ? 'VENTAS — chat zBox' : 'SALES — chat zBox'}</span>
-=======
               <MessageSquare size={15} style={{ flexShrink: 0 }} />
               <span>{isEs ? 'VENTAS' : 'SALES'}</span>
->>>>>>> 5810dccb5c980b40a058186b21a8e0776ce0fc2b
             </button>
           </div>
         </div>

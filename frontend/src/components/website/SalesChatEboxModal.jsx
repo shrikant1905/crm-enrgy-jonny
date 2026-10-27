@@ -50,17 +50,10 @@ export const SalesChatEboxModal = ({ isOpen, onClose }) => {
             }}>
               <MessageSquare size={20} />
             </div>
-<<<<<<< HEAD
-            <div>
-              <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
-                <span style={{ fontWeight: 800, fontSize: '15px', color: 'var(--web-text-main)' }}>
-                  SALES — chat zBox
-=======
             <div style={{ minWidth: 0, flex: 1 }}>
               <div style={{ display: 'flex', alignItems: 'center', gap: '6px', flexWrap: 'wrap' }}>
                 <span className="website-modal-title" style={{ fontWeight: 800, fontSize: '15px', color: 'var(--web-text-main)' }}>
                   SALES — chat eBox
->>>>>>> 5810dccb5c980b40a058186b21a8e0776ce0fc2b
                 </span>
                 <span className="website-modal-badge" style={{
                   fontSize: '9.5px',

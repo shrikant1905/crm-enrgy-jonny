@@ -74,7 +74,7 @@ import { SupportChat, SupportKb, SupportReports } from '../pages/crm/support/Sup
 
 // Phase 5 AI SuperHouse & Extended Modules
 import { CrmAiStudio } from '../pages/crm/CrmAiStudio';
-import { ZunmeAi } from '../pages/crm/ai/ZunmeAi';
+import { ZunmeAi } from '../pages/crm/ai/BestieAi';
 import { AiVoiceAgent } from '../pages/crm/ai/AiVoiceAgent';
 import { AiVideoAgent } from '../pages/crm/ai/AiVideoAgent';
 import { AiMarketing } from '../pages/crm/ai/AiMarketing';

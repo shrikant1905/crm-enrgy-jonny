@@ -21,6 +21,7 @@ const tenantRoutes = require('./routes/tenantRoutes');
 const manufacturingRoutes = require('./routes/manufacturingRoutes');
 const eboxRoutes = require('./routes/eboxRoutes');
 const swmtpRoutes = require('./routes/swmtpRoutes');
+const aiRoutes = require('./routes/aiRoutes');
 
 const { notFoundHandler, errorHandler } = require('./middleware/errorHandler');
 
@@ -115,6 +116,7 @@ app.use('/api/manufacturing', manufacturingRoutes);
 app.use('/api/ebox', eboxRoutes);
 app.use('/api/zbox', eboxRoutes);
 app.use('/api/v1/internal-staff', swmtpRoutes);
+app.use('/api/ai', aiRoutes);
 
 // 404 Handler for unknown routes
 app.use(notFoundHandler);

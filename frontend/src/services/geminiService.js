@@ -151,9 +151,37 @@ Structure:
 };
 
 /**
- * Call Universal AI API (Gemini API with Keyless Open-AI Endpoint & Resilient Fallback)
+ * Call Universal AI API (Local Server Ollama -> Gemini API -> Keyless Fallback)
  */
 export async function callGeminiApi(prompt, systemInstruction = '', model = GEMINI_MODEL) {
+  // 0. Primary: Server-side Local Ollama AI (via backend /api/ai/generate gateway)
+  try {
+    const apiBase = import.meta.env.VITE_API_BASE_URL || '/api';
+    const cleanBase = apiBase.endsWith('/') ? apiBase.slice(0, -1) : apiBase;
+    const aiEndpoint = cleanBase.endsWith('/api') ? `${cleanBase}/ai/generate` : `${cleanBase}/api/ai/generate`;
+
+    const controller = new AbortController();
+    const timeout = setTimeout(() => controller.abort(), 60000);
+
+    const response = await fetch(aiEndpoint, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ prompt, systemInstruction }),
+      signal: controller.signal,
+    });
+
+    clearTimeout(timeout);
+
+    if (response.ok) {
+      const data = await response.json();
+      if (data?.text && data.text.trim().length > 0) {
+        return data.text.trim();
+      }
+    }
+  } catch (err) {
+    console.warn('[Server Local AI Gateway]: Not responding, trying cloud/keyless fallbacks...', err.message);
+  }
+
   const apiKey = GEMINI_API_KEY;
 
   // 1. Attempt Official Google Gemini API if key is present
@@ -534,4 +562,3 @@ CHIEF ARCHITECT ELENA (30s) watches the live interactive pipeline HUD. The deal 
 
 *Status: Ready for immediate export and live deployment.*`;
 }
-

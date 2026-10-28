@@ -151,17 +151,20 @@ Structure:
 };
 
 /**
- * Call Universal AI API (Local Server Ollama -> Gemini API -> Keyless Fallback)
+ * Call Universal AI API (Local Server Ollama -> Gemini API -> Dynamic Fallback)
  */
 export async function callGeminiApi(prompt, systemInstruction = '', model = GEMINI_MODEL) {
   // 0. Primary: Server-side Local Ollama AI (via backend /api/ai/generate gateway)
   try {
-    const apiBase = import.meta.env.VITE_API_BASE_URL || '/api';
-    const cleanBase = apiBase.endsWith('/') ? apiBase.slice(0, -1) : apiBase;
+    const rawBase = import.meta.env.VITE_API_BASE_URL || 'http://159.198.65.194/api';
+    const cleanBase = rawBase.replace(/\/+$/, '');
     const aiEndpoint = cleanBase.endsWith('/api') ? `${cleanBase}/ai/generate` : `${cleanBase}/api/ai/generate`;
 
+    console.log('[Bestie AI] Calling Server AI:', aiEndpoint);
+
+    // 180s (3 minutes) timeout to accommodate CPU inference time
     const controller = new AbortController();
-    const timeout = setTimeout(() => controller.abort(), 60000);
+    const timeout = setTimeout(() => controller.abort(), 180000);
 
     const response = await fetch(aiEndpoint, {
       method: 'POST',
@@ -172,14 +175,20 @@ export async function callGeminiApi(prompt, systemInstruction = '', model = GEMI
 
     clearTimeout(timeout);
 
+    console.log('[Bestie AI] Server Response Status:', response.status);
+
     if (response.ok) {
       const data = await response.json();
+      console.log('[Bestie AI] Response data:', data);
       if (data?.text && data.text.trim().length > 0) {
         return data.text.trim();
       }
+    } else {
+      const errBody = await response.text();
+      console.warn(`[Bestie AI] Server responded with error ${response.status}:`, errBody);
     }
   } catch (err) {
-    console.warn('[Server Local AI Gateway]: Not responding, trying cloud/keyless fallbacks...', err.message);
+    console.warn('[Bestie AI] Connection to Server AI failed:', err.message);
   }
 
   const apiKey = GEMINI_API_KEY;
@@ -209,46 +218,11 @@ export async function callGeminiApi(prompt, systemInstruction = '', model = GEMI
         if (textOutput) return textOutput;
       }
     } catch (err) {
-      console.warn('[Gemini Cloud API]: Error or rate limit, switching to Keyless Neural Engine...', err.message);
+      console.warn('[Gemini Cloud API]: Error or rate limit...', err.message);
     }
   }
 
-  // 2. Keyless Free Open-Source Neural Engine (Pollinations Open LLM)
-  try {
-    const messages = [];
-    if (systemInstruction) {
-      messages.push({ role: 'system', content: systemInstruction });
-    }
-    messages.push({ role: 'user', content: prompt });
-
-    const controller = new AbortController();
-    const timeoutId = setTimeout(() => controller.abort(), 12000);
-
-    const response = await fetch('https://text.pollinations.ai/', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        messages,
-        model: 'openai',
-        seed: Math.floor(Math.random() * 100000),
-        jsonMode: false,
-      }),
-      signal: controller.signal,
-    });
-
-    clearTimeout(timeoutId);
-
-    if (response.ok) {
-      const openAiText = await response.text();
-      if (openAiText && openAiText.trim().length > 10) {
-        return openAiText.trim();
-      }
-    }
-  } catch (err) {
-    console.warn('[Keyless AI Engine]: Network timeout or restricted, applying Intelligent Domain Synthesizer.', err.message);
-  }
-
-  // 3. Fallback: Intelligent Dynamic Studio Synthesis tailored to prompt
+  // 2. Fallback: Intelligent Dynamic Studio Synthesis tailored to prompt
   return generateDynamicDomainContent(prompt, systemInstruction);
 }
 

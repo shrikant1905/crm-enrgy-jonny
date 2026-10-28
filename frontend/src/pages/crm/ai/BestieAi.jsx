@@ -455,143 +455,15 @@ export const ZunmeAi = () => {
               {t('Autonomous Operating Partner')}
             </Badge>
           </div>
-          <p style={{ fontSize: '12px', color: 'var(--text-secondary)', margin: '0.15rem 0 0 0' }}>
-            {t('Your 24/7 autonomous operating partner & AI agent with live speech recognition, voice synthesis, CRM lead dispatch, and task automation.')}
-          </p>
+        
         </div>
 
         {/* Action controls & Status indicator */}
-        <div style={{ display: 'flex', alignItems: 'center', gap: '0.625rem', flexWrap: 'wrap' }}>
-          {/* Voice Auto-Speak Toggle */}
-          <button
-            type="button"
-            onClick={() => {
-              const next = !isVoiceOutputEnabled;
-              setIsVoiceOutputEnabled(next);
-              if (!next && window.speechSynthesis) window.speechSynthesis.cancel();
-              addToast({
-                title: next ? t('Voice Output Enabled') : t('Voice Output Muted'),
-                message: next ? t('Bestie will read responses aloud.') : t('Bestie responses are now silent.'),
-                type: 'info',
-              });
-            }}
-            style={{
-              display: 'flex',
-              alignItems: 'center',
-              gap: '0.4rem',
-              padding: '0.4rem 0.75rem',
-              borderRadius: '9999px',
-              border: '1px solid var(--border)',
-              backgroundColor: isVoiceOutputEnabled ? 'rgba(2, 132, 199, 0.1)' : 'var(--surface)',
-              color: isVoiceOutputEnabled ? '#0284c7' : 'var(--text-secondary)',
-              fontSize: '11.5px',
-              fontWeight: 700,
-              cursor: 'pointer',
-              transition: 'all 150ms ease',
-            }}
-            title={isVoiceOutputEnabled ? t('Click to Mute Voice') : t('Click to Enable Voice')}
-          >
-            {isVoiceOutputEnabled ? <Volume2 size={14} color="#0284c7" /> : <VolumeX size={14} />}
-            <span>{isVoiceOutputEnabled ? t('Voice: On') : t('Voice: Muted')}</span>
-          </button>
-
-          {/* Reset Memory Button */}
-          <button
-            type="button"
-            onClick={handleClearHistory}
-            style={{
-              display: 'flex',
-              alignItems: 'center',
-              gap: '0.35rem',
-              padding: '0.4rem 0.75rem',
-              borderRadius: '9999px',
-              border: '1px solid var(--border)',
-              backgroundColor: 'var(--surface)',
-              color: 'var(--text-secondary)',
-              fontSize: '11.5px',
-              fontWeight: 600,
-              cursor: 'pointer',
-            }}
-            title={t('Clear Chat History')}
-          >
-            <Trash2 size={13} />
-            <span>{t('Clear Chat')}</span>
-          </button>
-
-          {/* Status Badge */}
-          <div
-            style={{
-              display: 'flex',
-              alignItems: 'center',
-              gap: '0.5rem',
-              padding: '0.4rem 0.875rem',
-              borderRadius: '9999px',
-              border: '1px solid rgba(2, 132, 199, 0.25)',
-              backgroundColor: 'rgba(56, 189, 248, 0.08)',
-              fontSize: '12px',
-              fontWeight: 600,
-              color: '#0284c7',
-            }}
-          >
-            <span style={{ width: '8px', height: '8px', borderRadius: '9999px', backgroundColor: '#10b981', display: 'inline-block' }} />
-            <span>{t('Vault Live')}</span>
-            <span style={{ color: 'var(--text-tertiary)', opacity: 0.6 }}>|</span>
-            <span style={{ fontFamily: 'var(--font-mono)', fontSize: '11px', fontWeight: 700 }}>{t('Autonomous v4.0')}</span>
-          </div>
-        </div>
+     
       </div>
 
       {/* Quick Action Suggestion Pills */}
-      <div
-        style={{
-          display: 'flex',
-          alignItems: 'center',
-          gap: '0.5rem',
-          overflowX: 'auto',
-          paddingBottom: '0.25rem',
-          flexShrink: 0,
-        }}
-      >
-        {quickActionPrompts.map((q, idx) => {
-          const Icon = q.icon;
-          return (
-            <button
-              key={idx}
-              type="button"
-              onClick={() => handleSend(q.query)}
-              style={{
-                display: 'inline-flex',
-                alignItems: 'center',
-                gap: '0.5rem',
-                padding: '0.45rem 0.85rem',
-                borderRadius: '10px',
-                fontSize: '12px',
-                fontWeight: 600,
-                whiteSpace: 'nowrap',
-                cursor: 'pointer',
-                border: '1px solid var(--border)',
-                backgroundColor: 'var(--surface)',
-                color: 'var(--text-primary)',
-                transition: 'all 150ms ease',
-              }}
-              onMouseEnter={(e) => {
-                e.currentTarget.style.borderColor = '#0284c7';
-                e.currentTarget.style.backgroundColor = 'rgba(56, 189, 248, 0.08)';
-                e.currentTarget.style.color = '#0284c7';
-              }}
-              onMouseLeave={(e) => {
-                e.currentTarget.style.borderColor = 'var(--border)';
-                e.currentTarget.style.backgroundColor = 'var(--surface)';
-                e.currentTarget.style.color = 'var(--text-primary)';
-              }}
-            >
-              <Icon size={14} style={{ color: '#0284c7' }} />
-              <span>{q.label}</span>
-            </button>
-          );
-        })}
-      </div>
-
+    
       {/* Main Chat Workspace Card */}
       <div
         style={{
